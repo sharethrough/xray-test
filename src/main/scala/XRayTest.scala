@@ -1,21 +1,20 @@
 import com.amazonaws.xray.AWSXRayRecorderBuilder
+import org.slf4j.LoggerFactory
 
-object XRayTest extends App {
+object XRayTest extends App  {
 
-  val xrayRecorder = AWSXRayRecorderBuilder.defaultRecorder
+  val log = LoggerFactory.getLogger("xraytest")
 
-  def tracedFunction (): Unit = {
-    println(s"begin ${Thread.currentThread().getId}")
-    val segment = xrayRecorder.beginSegment("bad-ip-testing")
+  log.info(s"sharethrough: xray logging setting: ${System.getProperty("logging.level.com.amazonaws.xray")}")
 
+  val recorder = AWSXRayRecorderBuilder.defaultRecorder
+  
+  recorder.beginSegment("segment1")
 
-    segment.end()
-    println(s"end ${Thread.currentThread().getId}")
-  }
+  log.info("sharethrough: Some business code")
 
-  // first call
-  tracedFunction()
+  recorder.endSegment()
 
-  // second call
-  tracedFunction()
+  log.info(s"sharethrough: done")
+
 }

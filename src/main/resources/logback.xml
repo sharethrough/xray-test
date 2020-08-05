@@ -1,0 +1,21 @@
+<configuration>
+  <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook" />
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="com.twitter.finagle" level="WARN"/>
+  <logger name="io.netty.channel.DefaultChannelPipeline" level="ERROR"/>
+
+  <!-- Trying these just in case, but they don't work either -->
+  <logger name="com.amazonaws.xray" level="DEBUG"/>
+  <logger name="logging.level.com.amazonaws.xray" level="DEBUG"/>
+  <!-- -->
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

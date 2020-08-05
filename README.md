@@ -1,40 +1,43 @@
 # XRay test
 
-[Code](src/main/scala/XRayTest.scala) is all on a single thread:
+[Code](src/main/scala/XRayTest.scala):
 
 ```scala
-val xrayRecorder = AWSXRayRecorderBuilder.defaultRecorder
+object XRayTest extends App  {
 
-def tracedFunction (): Unit = {
-  println(s"begin ${Thread.currentThread().getId}")
-  val segment = xrayRecorder.beginSegment("bad-ip-testing")
+  val log = LoggerFactory.getLogger("xraytest")
 
+  log.info(s"sharethrough: xray logging setting: ${System.getProperty("logging.level.com.amazonaws.xray")}")
 
-  segment.end()
-  println(s"end ${Thread.currentThread().getId}")
+  val recorder = AWSXRayRecorderBuilder.defaultRecorder
+  
+  recorder.beginSegment("segment1")
+
+  log.info("sharethrough: Some business code")
+
+  recorder.endSegment()
+
+  log.info(s"sharethrough: done")
+
 }
-
-// first call
-tracedFunction()
-
-// second call
-tracedFunction()
 ```
 
 To run:
 
-    $ sbt run
+    $ sbt run -Dlogging.level.com.amazonaws.xray=DEBUG
 
 Output:
 
-    alvarocarrasco@Alvaro-Work-Laptop xray-test % sbt run
+    alvarocarrasco@Alvaro-Work-Laptop xray-test % sbt run -Dlogging.level.com.amazonaws.xray=DEBUG
+    [info] Loading settings for project global-plugins from plugins.sbt ...
+    [info] Loading global plugins from /Users/alvarocarrasco/.sbt/1.0/plugins
+    [info] Loading settings for project xray-test-build from metals.sbt ...
     [info] Loading project definition from /Users/alvarocarrasco/workspace/xray-test/project
     [info] Loading settings for project xray-test from build.sbt ...
     [info] Set current project to xray-test (in build file:/Users/alvarocarrasco/workspace/xray-test/)
-    [info] running XRayTest
-    begin 112
-    end 112
-    begin 112
-    Jul 08, 2020 2:21:09 PM com.amazonaws.xray.AWSXRayRecorder beginSegment
-    SEVERE: Beginning new segment while another segment exists in the segment context. Overwriting current segment named 'bad-ip-testing' to start new segment named 'bad-ip-testing'.
-    end 112
+    [info] Packaging /Users/alvarocarrasco/workspace/xray-test/target/scala-2.12/xray-test_2.12-0.1.0-SNAPSHOT.jar ...
+    [info] Done packaging.
+    [info] Running XRayTest 
+    12:30:05.208 [run-main-0] INFO  xraytest - sharethrough: xray logging setting: DEBUG
+    12:30:05.234 [run-main-0] INFO  xraytest - sharethrough: Some business code
+    12:30:05.276 [run-main-0] INFO  xraytest - sharethrough: done
