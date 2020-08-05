@@ -22,6 +22,9 @@ object XRayTest extends App  {
 }
 ```
 
+Logging config:
+[src/main/resources/logback.xml](src/main/resources/logback.xml)
+
 To run:
 
     $ sbt run -Dlogging.level.com.amazonaws.xray=DEBUG
