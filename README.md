@@ -1,6 +1,7 @@
 # XRay test
 
-[Code](src/main/scala/XRayTest.scala):
+Application:
+[src/main/scala/XRayTest.scala](src/main/scala/XRayTest.scala):
 
 ```scala
 object XRayTest extends App  {
