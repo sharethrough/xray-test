@@ -31,6 +31,10 @@ Logging config:
     <logger name="com.amazonaws.xray" level="DEBUG"/>
     <logger name="logging.level.com.amazonaws.xray" level="DEBUG"/>
     <!-- -->
+    
+    <root level="DEBUG">
+      <appender-ref ref="STDOUT" />
+    </root>
     ...
 
 To run:
