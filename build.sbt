@@ -6,6 +6,7 @@ libraryDependencies ++= Seq(
   "com.twitter" % "util-core_2.12" % "20.6.0",
   "com.twitter" %% "finagle-http" % "20.6.0",
   "com.twitter" %% "twitter-server" % "20.7.0",
-  "ch.qos.logback" % "logback-classic" % "1.2.3"
+  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  "org.slf4j" % "jcl-over-slf4j" % "1.7.30"
 )
 
