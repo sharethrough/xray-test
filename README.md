@@ -1,6 +1,7 @@
 # XRay test
 
-[Code](src/main/scala/XRayTest.scala):
+Application:
+[src/main/scala/XRayTest.scala](src/main/scala/XRayTest.scala):
 
 ```scala
 object XRayTest extends App  {
@@ -21,6 +22,20 @@ object XRayTest extends App  {
 
 }
 ```
+
+Logging config:
+[src/main/resources/logback.xml](src/main/resources/logback.xml)
+
+    ...
+    <!-- Trying these just in case, but they don't work either -->
+    <logger name="com.amazonaws.xray" level="DEBUG"/>
+    <logger name="logging.level.com.amazonaws.xray" level="DEBUG"/>
+    <!-- -->
+    
+    <root level="DEBUG">
+      <appender-ref ref="STDOUT" />
+    </root>
+    ...
 
 To run:
 
